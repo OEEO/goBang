@@ -104,7 +104,7 @@ module.exports = __webpack_require__(4) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(9);
-var IE8_DOM_DEFINE = __webpack_require__(29);
+var IE8_DOM_DEFINE = __webpack_require__(30);
 var toPrimitive = __webpack_require__(16);
 var dP = Object.defineProperty;
 
@@ -286,7 +286,7 @@ module.exports = {};
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(33);
+var $keys = __webpack_require__(34);
 var enumBugKeys = __webpack_require__(21);
 
 module.exports = Object.keys || function keys(O) {
@@ -374,6 +374,70 @@ exports.f = {}.propertyIsEnumerable;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = drawChessBoard;
+/* harmony export (immutable) */ __webpack_exports__["a"] = drawChess;
+function drawChessSquare(ctx) {
+    for (var i = 0; i < 15; i++) {
+        ctx.moveTo(30 + i * 30, 30);
+        ctx.lineTo(30 + i * 30, 450);
+        ctx.stroke();
+        ctx.moveTo(30, 30 + i * 30);
+        ctx.lineTo(450, 30 + i * 30);
+        ctx.stroke();
+    }
+    ctx.moveTo(120, 120);
+    ctx.arc(120, 120, 5, 0, 2 * Math.PI);
+    ctx.moveTo(120, 360);
+    ctx.arc(120, 360, 5, 0, 2 * Math.PI);
+    ctx.moveTo(360, 120);
+    ctx.arc(360, 120, 5, 0, 2 * Math.PI);
+    ctx.moveTo(360, 360);
+    ctx.arc(360, 360, 5, 0, 2 * Math.PI);
+    ctx.moveTo(240, 240);
+    ctx.arc(240, 240, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = '#333';
+    ctx.fill();
+}
+
+function drawChessBoard() {
+    var canvas = document.createElement('canvas');
+    var wrap = document.querySelector('.wrap');
+    canvas.width = 480;
+    canvas.height = 480;
+    wrap.innerHTML = '';
+    wrap.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#444';
+    var chessBgImg = new Image();
+    chessBgImg.src = './static/img/goBang.jpg';
+    chessBgImg.onload = function () {
+        ctx.drawImage(chessBgImg, 0, 0, 480, 480);
+        drawChessSquare(ctx);
+    };
+}
+
+function drawChess(i, j, isBlack) {
+    var ctx = document.querySelector('canvas').getContext('2d');
+    ctx.beginPath();
+    ctx.arc(30 + 30 * i, 30 + 30 * j, 13, 0, 2 * Math.PI);
+    ctx.closePath();
+    var gradient = ctx.createRadialGradient(30 + i * 30 + 2, 30 + j * 30 - 2, 12, 30 + i * 30 + 2, 30 + j * 30 - 2, 0);
+    if (isBlack) {
+        gradient.addColorStop(0, '#0a0a0a');
+        gradient.addColorStop(1, '#636766');
+    } else {
+        gradient.addColorStop(0, '#d1d1d1');
+        gradient.addColorStop(1, '#f9f9f9');
+    }
+    ctx.fillStyle = gradient;
+    ctx.fill();
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = bindEvent;
 /* unused harmony export removeEvent */
 function bindEvent(selector, eventType, func) {
@@ -387,14 +451,14 @@ function removeEvent(selector, eventType, func) {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var LIBRARY = __webpack_require__(15);
-var $export = __webpack_require__(28);
-var redefine = __webpack_require__(31);
+var $export = __webpack_require__(29);
+var redefine = __webpack_require__(32);
 var hide = __webpack_require__(2);
 var has = __webpack_require__(1);
 var Iterators = __webpack_require__(17);
@@ -464,7 +528,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
@@ -531,16 +595,16 @@ module.exports = $export;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(4) && !__webpack_require__(10)(function () {
-  return Object.defineProperty(__webpack_require__(30)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(31)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(7);
@@ -553,14 +617,14 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
@@ -574,7 +638,7 @@ var PROTOTYPE = 'prototype';
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(30)('iframe');
+  var iframe = __webpack_require__(31)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -607,7 +671,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(1);
@@ -630,7 +694,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -641,88 +705,24 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(33);
+var $keys = __webpack_require__(34);
 var hiddenKeys = __webpack_require__(21).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
 };
 
-
-/***/ }),
-/* 37 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = drawChessBoard;
-/* harmony export (immutable) */ __webpack_exports__["a"] = drawChess;
-function drawChessSquare(ctx) {
-    for (var i = 0; i < 15; i++) {
-        ctx.moveTo(30 + i * 30, 30);
-        ctx.lineTo(30 + i * 30, 450);
-        ctx.stroke();
-        ctx.moveTo(30, 30 + i * 30);
-        ctx.lineTo(450, 30 + i * 30);
-        ctx.stroke();
-    }
-    ctx.moveTo(120, 120);
-    ctx.arc(120, 120, 5, 0, 2 * Math.PI);
-    ctx.moveTo(120, 360);
-    ctx.arc(120, 360, 5, 0, 2 * Math.PI);
-    ctx.moveTo(360, 120);
-    ctx.arc(360, 120, 5, 0, 2 * Math.PI);
-    ctx.moveTo(360, 360);
-    ctx.arc(360, 360, 5, 0, 2 * Math.PI);
-    ctx.moveTo(240, 240);
-    ctx.arc(240, 240, 5, 0, 2 * Math.PI);
-    ctx.fillStyle = '#333';
-    ctx.fill();
-}
-
-function drawChessBoard() {
-    var canvas = document.createElement('canvas');
-    var wrap = document.querySelector('.wrap');
-    canvas.width = 480;
-    canvas.height = 480;
-    wrap.innerHTML = '';
-    wrap.appendChild(canvas);
-    var ctx = canvas.getContext('2d');
-    ctx.strokeStyle = '#444';
-    var chessBgImg = new Image();
-    chessBgImg.src = './static/img/goBang.jpg';
-    chessBgImg.onload = function () {
-        ctx.drawImage(chessBgImg, 0, 0, 480, 480);
-        drawChessSquare(ctx);
-    };
-}
-
-function drawChess(i, j, isBlack) {
-    var ctx = document.querySelector('canvas').getContext('2d');
-    ctx.beginPath();
-    ctx.arc(30 + 30 * i, 30 + 30 * j, 13, 0, 2 * Math.PI);
-    ctx.closePath();
-    var gradient = ctx.createRadialGradient(30 + i * 30 + 2, 30 + j * 30 - 2, 12, 30 + i * 30 + 2, 30 + j * 30 - 2, 0);
-    if (isBlack) {
-        gradient.addColorStop(0, '#0a0a0a');
-        gradient.addColorStop(1, '#636766');
-    } else {
-        gradient.addColorStop(0, '#d1d1d1');
-        gradient.addColorStop(1, '#f9f9f9');
-    }
-    ctx.fillStyle = gradient;
-    ctx.fill();
-}
 
 /***/ }),
 /* 38 */
@@ -758,9 +758,9 @@ __WEBPACK_IMPORTED_MODULE_2__common_js_init_js__["a" /* init */]();
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = init;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bindEvent_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bindEvent_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__goBang_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__drawChessBoard_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__drawChessBoard_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__render_js__ = __webpack_require__(76);
 
 
@@ -880,6 +880,7 @@ var goBang = {
         this.blackWin = new Array(count).fill(0);
         this.whiteWin = new Array(count).fill(0);
         this.map = cloneObject(map);
+        this.isBlack = true;
     }
 };
 
@@ -951,7 +952,7 @@ module.exports = __webpack_require__(23).f('iterator');
 var $at = __webpack_require__(49)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(27)(String, 'String', function (iterated) {
+__webpack_require__(28)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -1031,7 +1032,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var create = __webpack_require__(32);
+var create = __webpack_require__(33);
 var descriptor = __webpack_require__(11);
 var setToStringTag = __webpack_require__(22);
 var IteratorPrototype = {};
@@ -1069,7 +1070,7 @@ module.exports = __webpack_require__(4) ? Object.defineProperties : function def
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(34);
+var cof = __webpack_require__(35);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -1208,7 +1209,7 @@ var toIObject = __webpack_require__(5);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(27)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(28)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -1277,8 +1278,8 @@ module.exports = __webpack_require__(8).Symbol;
 var global = __webpack_require__(0);
 var has = __webpack_require__(1);
 var DESCRIPTORS = __webpack_require__(4);
-var $export = __webpack_require__(28);
-var redefine = __webpack_require__(31);
+var $export = __webpack_require__(29);
+var redefine = __webpack_require__(32);
 var META = __webpack_require__(68).KEY;
 var $fails = __webpack_require__(10);
 var shared = __webpack_require__(20);
@@ -1294,7 +1295,7 @@ var isObject = __webpack_require__(7);
 var toIObject = __webpack_require__(5);
 var toPrimitive = __webpack_require__(16);
 var createDesc = __webpack_require__(11);
-var _create = __webpack_require__(32);
+var _create = __webpack_require__(33);
 var gOPNExt = __webpack_require__(71);
 var $GOPD = __webpack_require__(72);
 var $DP = __webpack_require__(3);
@@ -1421,9 +1422,9 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(36).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(37).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(25).f = $propertyIsEnumerable;
-  __webpack_require__(35).f = $getOwnPropertySymbols;
+  __webpack_require__(36).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(15)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
@@ -1573,7 +1574,7 @@ var meta = module.exports = {
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(18);
-var gOPS = __webpack_require__(35);
+var gOPS = __webpack_require__(36);
 var pIE = __webpack_require__(25);
 module.exports = function (it) {
   var result = getKeys(it);
@@ -1593,7 +1594,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(34);
+var cof = __webpack_require__(35);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -1605,7 +1606,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(5);
-var gOPN = __webpack_require__(36).f;
+var gOPN = __webpack_require__(37).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -1633,7 +1634,7 @@ var createDesc = __webpack_require__(11);
 var toIObject = __webpack_require__(5);
 var toPrimitive = __webpack_require__(16);
 var has = __webpack_require__(1);
-var IE8_DOM_DEFINE = __webpack_require__(29);
+var IE8_DOM_DEFINE = __webpack_require__(30);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(4) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -1672,8 +1673,11 @@ __webpack_require__(24)('observable');
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bindEvent_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__drawChessBoard_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bindEvent_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__drawChessBoard_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__computerAI_js__ = __webpack_require__(77);
+
+
 
 
 function render(goBang) {
@@ -1684,113 +1688,26 @@ function render(goBang) {
     var whiteWin = goBang.whiteWin;
     var wins = goBang.wins;
     var mode = goBang.mode;
-    var gameOver = false;
     var map = goBang.map;
-    var isBlack = true;
-
-    var computerAI = function computerAI() {
-        var myScore = [];
-        var computerScore = [];
-        var max = 0;
-        var u = 0,
-            v = 0;
-        for (var i = 0; i < 15; i++) {
-            myScore[i] = [];
-            computerScore[i] = [];
-            for (var j = 0; j < 15; j++) {
-                myScore[i][j] = 0;
-                computerScore[i][j] = 0;
-            }
-        }
-        for (var _i = 0; _i < 15; _i++) {
-            for (var _j = 0; _j < 15; _j++) {
-                if (map[_i][_j] === 0) {
-                    for (var k = 0; k < count; k++) {
-                        if (wins[_i][_j][k]) {
-                            if (blackWin[k] === 1) {
-                                myScore[_i][_j] += 200;
-                            } else if (blackWin[k] === 2) {
-                                myScore[_i][_j] += 400;
-                            } else if (blackWin[k] === 3) {
-                                myScore[_i][_j] += 2000;
-                            } else if (blackWin[k] === 4) {
-                                myScore[_i][_j] += 10000;
-                            }
-
-                            if (whiteWin[k] === 1) {
-                                computerScore[_i][_j] += 220;
-                            } else if (whiteWin[k] === 2) {
-                                computerScore[_i][_j] += 420;
-                            } else if (whiteWin[k] === 3) {
-                                computerScore[_i][_j] += 2100;
-                            } else if (whiteWin[k] === 4) {
-                                computerScore[_i][_j] += 20000;
-                            }
-                        }
-                    }
-
-                    if (myScore[_i][_j] > max) {
-                        max = myScore[_i][_j];
-                        u = _i;
-                        v = _j;
-                    } else if (myScore[_i][_j] === max) {
-                        if (computerScore[_i][_j] > computerScore[u][v]) {
-                            u = _i;
-                            v = _j;
-                        }
-                    }
-
-                    if (computerScore[_i][_j] > max) {
-                        max = computerScore[_i][_j];
-                        u = _i;
-                        v = _j;
-                    } else if (computerScore[_i][_j] === max) {
-                        if (myScore[_i][_j] > myScore[u][v]) {
-                            u = _i;
-                            v = _j;
-                        }
-                    }
-                }
-            }
-        }
-        __WEBPACK_IMPORTED_MODULE_1__drawChessBoard_js__["a" /* drawChess */](u, v, false);
-        chessAudio.play();
-        map[u][v] = 2;
-        for (var _k = 0; _k < count; _k++) {
-            if (wins[u][v][_k]) {
-                whiteWin[_k]++;
-                blackWin[_k] = 6;
-                if (whiteWin[_k] === 5) {
-                    var tips = document.querySelector('.tips');
-                    tips.innerHTML = '白棋赢了!!!';
-                    tips.style.display = 'block';
-                    gameOver = true;
-                }
-            }
-        }
-        if (!gameOver) {
-            isBlack = !isBlack;
-        }
-    };
 
     __WEBPACK_IMPORTED_MODULE_0__bindEvent_js__["a" /* bindEvent */]('canvas', 'click', function (e) {
-        if (mode === 0 || gameOver || mode === 2 && !isBlack) {
+        if (mode === 0 || goBang.gameOver || mode === 2 && !goBang.isBlack) {
             return;
         }
         var x = e.offsetX;
         var y = e.offsetY;
         var i = ~~((x - 15) / 30);
         var j = ~~((y - 15) / 30);
-        if (goBang.map[i][j]) {
+        if (map[i][j]) {
             return;
         }
 
-        goBang.map[i][j] = 1;
-        __WEBPACK_IMPORTED_MODULE_1__drawChessBoard_js__["a" /* drawChess */](i, j, isBlack);
+        map[i][j] = 1;
+        __WEBPACK_IMPORTED_MODULE_1__drawChessBoard_js__["a" /* drawChess */](i, j, goBang.isBlack);
         chessAudio.play();
 
         if (mode === 1) {
-            if (isBlack) {
+            if (goBang.isBlack) {
                 for (var n = 0; n < count; n++) {
                     if (wins[i][j][n]) {
                         blackWin[n]++;
@@ -1799,7 +1716,7 @@ function render(goBang) {
                             var tips = document.querySelector('.tips');
                             tips.innerHTML = '黑棋赢了!!!';
                             tips.style.display = 'block';
-                            gameOver = true;
+                            goBang.gameOver = true;
                         }
                     }
                 }
@@ -1812,13 +1729,13 @@ function render(goBang) {
                             var _tips = document.querySelector('.tips');
                             _tips.innerHTML = '白棋赢了!!!';
                             _tips.style.display = 'block';
-                            gameOver = true;
+                            goBang.gameOver = true;
                         }
                     }
                 }
             }
         }
-        isBlack = !isBlack;
+        goBang.isBlack = !goBang.isBlack;
 
         if (mode === 2) {
             for (var _n2 = 0; _n2 < count; _n2++) {
@@ -1829,17 +1746,117 @@ function render(goBang) {
                         var _tips2 = document.querySelector('.tips');
                         _tips2.innerHTML = '黑棋赢了!!!';
                         _tips2.style.display = 'block';
-                        gameOver = true;
+                        goBang.gameOver = true;
                     }
                 }
             }
-            if (!gameOver) {
+            if (!goBang.gameOver) {
                 setTimeout(function () {
-                    computerAI();
+                    __WEBPACK_IMPORTED_MODULE_2__computerAI_js__["a" /* computerAI */](goBang);
                 }, 500);
             }
         }
     });
+}
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = computerAI;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__drawChessBoard_js__ = __webpack_require__(26);
+
+
+function computerAI(goBang) {
+    var chessAudio = document.querySelector('#chessAudio');
+    var myScore = [];
+    var computerScore = [];
+    var max = 0;
+    var u = 0,
+        v = 0;
+    var map = goBang.map;
+    var wins = goBang.wins;
+    var blackWin = goBang.blackWin;
+    var whiteWin = goBang.whiteWin;
+    var count = goBang.count;
+    for (var i = 0; i < 15; i++) {
+        myScore[i] = [];
+        computerScore[i] = [];
+        for (var j = 0; j < 15; j++) {
+            myScore[i][j] = 0;
+            computerScore[i][j] = 0;
+        }
+    }
+    for (var _i = 0; _i < 15; _i++) {
+        for (var _j = 0; _j < 15; _j++) {
+            if (map[_i][_j] === 0) {
+                for (var k = 0; k < count; k++) {
+                    if (wins[_i][_j][k]) {
+                        if (blackWin[k] === 1) {
+                            myScore[_i][_j] += 200;
+                        } else if (blackWin[k] === 2) {
+                            myScore[_i][_j] += 400;
+                        } else if (blackWin[k] === 3) {
+                            myScore[_i][_j] += 2000;
+                        } else if (blackWin[k] === 4) {
+                            myScore[_i][_j] += 10000;
+                        }
+
+                        if (whiteWin[k] === 1) {
+                            computerScore[_i][_j] += 220;
+                        } else if (whiteWin[k] === 2) {
+                            computerScore[_i][_j] += 420;
+                        } else if (whiteWin[k] === 3) {
+                            computerScore[_i][_j] += 2100;
+                        } else if (whiteWin[k] === 4) {
+                            computerScore[_i][_j] += 20000;
+                        }
+                    }
+                }
+
+                if (myScore[_i][_j] > max) {
+                    max = myScore[_i][_j];
+                    u = _i;
+                    v = _j;
+                } else if (myScore[_i][_j] === max) {
+                    if (computerScore[_i][_j] > computerScore[u][v]) {
+                        u = _i;
+                        v = _j;
+                    }
+                }
+
+                if (computerScore[_i][_j] > max) {
+                    max = computerScore[_i][_j];
+                    u = _i;
+                    v = _j;
+                } else if (computerScore[_i][_j] === max) {
+                    if (myScore[_i][_j] > myScore[u][v]) {
+                        u = _i;
+                        v = _j;
+                    }
+                }
+            }
+        }
+    }
+    __WEBPACK_IMPORTED_MODULE_0__drawChessBoard_js__["a" /* drawChess */](u, v, false);
+    chessAudio.play();
+    map[u][v] = 2;
+    for (var _k = 0; _k < count; _k++) {
+        if (wins[u][v][_k]) {
+            whiteWin[_k]++;
+            blackWin[_k] = 6;
+            if (whiteWin[_k] === 5) {
+                var tips = document.querySelector('.tips');
+                tips.innerHTML = '白棋赢了!!!';
+                tips.style.display = 'block';
+                goBang.gameOver = true;
+            }
+        }
+    }
+    if (!goBang.gameOver) {
+        goBang.isBlack = !goBang.isBlack;
+    }
 }
 
 /***/ })

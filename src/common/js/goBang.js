@@ -82,5 +82,6 @@ export let goBang = {
         this.blackWin = new Array(count).fill(0);
         this.whiteWin = new Array(count).fill(0);
         this.map = cloneObject(map);
+        this.isBlack = true;
     }
 };

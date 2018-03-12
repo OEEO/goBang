@@ -3,6 +3,9 @@ $width:480px;
     width:$width;
     margin: 100px auto 50px auto;
     text-align: center;
+    canvas:hover{
+        cursor: pointer;
+    }
     button{
         border: none;
         padding: 8px 10px;
