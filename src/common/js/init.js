@@ -7,17 +7,19 @@ export function init() {
     drawChessBoard();
     bindEvent('#btn-doubleBattle', 'click', function () {
         goBang.mode = 1;
-        document.querySelector('.menu').style.display = 'none';
+        document.querySelector('.mode').style.display = 'none';
         render(goBang);
+        document.querySelector('#btn-restart').style.display = 'inline-block';
     });
     bindEvent('#btn-humanBattle', 'click', function () {
         goBang.mode = 2;
-        document.querySelector('.menu').style.display = 'none';
+        document.querySelector('.mode').style.display = 'none';
         render(goBang);
+        document.querySelector('#btn-restart').style.display = 'inline-block';
     });
     bindEvent('#btn-restart', 'click', function () {
         drawChessBoard();
         document.querySelector('.tips').style.display = 'none';
-        document.querySelector('.menu').style.display = 'block';
+        document.querySelector('.mode').style.display = 'flex';
     });
 }

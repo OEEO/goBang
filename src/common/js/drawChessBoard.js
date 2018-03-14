@@ -54,4 +54,4 @@ export function drawChess(i, j, isBlack) {
     }
     ctx.fillStyle = gradient;
     ctx.fill();
-   }
+}

@@ -49,12 +49,12 @@ module.exports = {
         new ExtractTextPlugin({
             filename:`main.css`,
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //   sourceMap: true,
-        //   compress: {
-        //     warnings: false
-        //   }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: true,
+          compress: {
+            warnings: false
+          }
+        })
     ],
     devtool: 'source-map',
 };

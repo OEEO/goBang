@@ -1,19 +1,52 @@
 $width:480px;
 .container{
+    position: relative;
     width:$width;
     margin: 100px auto 50px auto;
     text-align: center;
-    canvas:hover{
-        cursor: pointer;
+    canvas{
+        box-shadow: 3px 3px 2px 2px rgba(50,50,50,0.5);
+        &:hover{
+            cursor: pointer;
+        }
     }
     button{
+        font-size: 18px;
         border: none;
-        padding: 8px 10px;
-        border-radius: 5px;
-        background-color: green;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
         transition: all 0.25s;
         &:hover{
-            background-color: red;
+            cursor: pointer;
+            background-color: #009a61;
         }
+    }
+    .mode{
+        width: $width;
+        height: $width;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .tips{
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 8px;
+        top: ($width - 50px) / 2;
+        left: ($width - 200px) / 2;
+        color: #fff;
+        background-color: #4caf50;
+        user-select: none;
+    }
+    .btn-restart{
+        border-radius: 8px;
+        margin-top: 10px;
     }
 }
